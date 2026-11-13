@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 500" role="img" aria-labelledby="title desc">
+  <title id="title">CVTL Lab</title>
+  <desc id="desc">Symbole géométrique CVTL Lab</desc>
+  <style>
+          .main{fill:#000}
+          @media (prefers-color-scheme: dark){.main{fill:#fff}}
+        </style>
+  <polygon class="main" points="312,91 199,25 45,118 157,182"/>
+  <polygon class="main" points="28,140 27,384 142,451 142,206"/>
+  <polygon class="main" points="339,405 259,359 163,415 163,465 201,486"/>
+  <polygon fill="#0018FC" points="217,224 216,323 313,323 313,224"/>
+</svg>

@@ -1,0 +1,129 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "Organization",
+        "ProfessionalService"
+      ],
+      "@id": "https://cvtllab.fr/#business",
+      "name": "CVTL Lab",
+      "url": "https://cvtllab.fr/",
+      "logo": "https://cvtllab.fr/logo.svg",
+      "image": "https://cvtllab.fr/share-card.png",
+      "email": "contact@cvtllab.fr",
+      "description": "Studio numérique basé au Taillan-Médoc : création de sites web, outils métier sur mesure, automatisations, intégrations d’intelligence artificielle, domaine/e-mail et amélioration de sites pour les entreprises de Bordeaux et de la Gironde.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Le Taillan-Médoc",
+        "postalCode": "33320",
+        "addressRegion": "Nouvelle-Aquitaine",
+        "addressCountry": "FR"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Bordeaux"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Bordeaux Métropole"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Gironde"
+        }
+      ],
+      "priceRange": "Sur devis",
+      "knowsAbout": [
+        "création de site web",
+        "développement web",
+        "outil métier sur mesure",
+        "automatisation de processus",
+        "intelligence artificielle en entreprise",
+        "DNS",
+        "e-mail professionnel",
+        "performance web",
+        "sécurité web"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services numériques CVTL Lab",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Création de site web",
+              "url": "https://cvtllab.fr/creation-site-web-bordeaux.html"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Outil métier sur mesure",
+              "url": "https://cvtllab.fr/outil-sur-mesure-bordeaux.html"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Automatisation d’entreprise",
+              "url": "https://cvtllab.fr/automatisation-entreprise-bordeaux.html"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Intelligence artificielle pour entreprise",
+              "url": "https://cvtllab.fr/intelligence-artificielle-entreprise-bordeaux.html"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Nom de domaine et e-mail professionnel",
+              "url": "https://cvtllab.fr/nom-domaine-email-professionnel-bordeaux.html"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Refonte, performance et sécurité web",
+              "url": "https://cvtllab.fr/refonte-securite-performance-site-bordeaux.html"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://cvtllab.fr/#website",
+      "url": "https://cvtllab.fr/",
+      "name": "CVTL Lab",
+      "inLanguage": "fr-FR",
+      "publisher": {
+        "@id": "https://cvtllab.fr/#business"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://cvtllab.fr/#webpage",
+      "url": "https://cvtllab.fr/",
+      "name": "Création de sites web & automatisation à Bordeaux | CVTL Lab",
+      "description": "CVTL Lab crée des sites web rapides, outils sur mesure, automatisations et solutions IA pour indépendants, commerces et TPE/PME à Bordeaux et en Gironde.",
+      "isPartOf": {
+        "@id": "https://cvtllab.fr/#website"
+      },
+      "about": {
+        "@id": "https://cvtllab.fr/#business"
+      },
+      "inLanguage": "fr-FR"
+    }
+  ]
+}

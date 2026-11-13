@@ -1,0 +1,476 @@
+[
+  {
+    "slug": "creation-site-web-bordeaux",
+    "key": "web",
+    "title": "Création de site web à Bordeaux | CVTL Lab",
+    "description": "Création et refonte de sites web rapides, mobiles et clairs à Bordeaux et en Gironde pour indépendants, commerces, associations et TPE/PME.",
+    "eyebrow": "Création web · Bordeaux & Gironde",
+    "crumb": "Création de site web",
+    "h1": "Création de site web à Bordeaux, pensé pour votre activité.",
+    "lead": "Site vitrine, catalogue, formulaire, page de lancement ou amélioration d’un site existant : CVTL Lab conçoit des sites rapides, lisibles et adaptés aux mobiles pour les professionnels de Bordeaux et de la Gironde.",
+    "sideLabel": "Service",
+    "sideTitle": "Création de site web",
+    "sideText": "Pour indépendants, commerces, associations et TPE/PME à Bordeaux et en Gironde.",
+    "approach": {
+      "eyebrow": "Approche",
+      "h2": "Un site qui explique clairement ce que vous faites.",
+      "p": [
+        "Un bon site professionnel ne sert pas seulement à « être sur Internet ». Il doit permettre à un prospect de comprendre rapidement votre activité, vos services, votre zone d’intervention et la manière de vous contacter.",
+        "CVTL Lab travaille sur la structure, le contenu, le responsive, la vitesse, l’accessibilité et les bases du référencement naturel dès la conception. Le projet peut partir de zéro ou reprendre un site déjà en ligne qui mérite d’être modernisé."
+      ]
+    },
+    "scope": {
+      "eyebrow": "Périmètre",
+      "h2": "Ce qui peut être réalisé",
+      "items": [
+        "Site vitrine pour présenter une activité locale",
+        "Pages de services structurées pour le référencement",
+        "Catalogue sans paiement en ligne",
+        "Formulaires de contact et demandes de devis",
+        "Responsive mobile, tablette et ordinateur",
+        "Optimisation des performances et du poids des pages",
+        "SEO technique : titres, métadonnées, sitemap, données structurées",
+        "Mise en place du domaine, DNS et e-mail si nécessaire"
+      ]
+    },
+    "cases": {
+      "eyebrow": "Cas d’usage",
+      "h2": "Pour quels projets ?",
+      "cards": [
+        {
+          "t": "Lancer une activité",
+          "p": "Créer une présence professionnelle claire dès le départ."
+        },
+        {
+          "t": "Remplacer un site vieillissant",
+          "p": "Moderniser le design, le code, le mobile et les performances."
+        },
+        {
+          "t": "Être trouvé localement",
+          "p": "Structurer les pages autour des services réellement proposés à Bordeaux et en Gironde."
+        },
+        {
+          "t": "Recevoir plus de demandes qualifiées",
+          "p": "Simplifier le parcours entre la recherche, la compréhension du service et le contact."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Questions fréquentes",
+      "h2": "Questions sur la création de site web.",
+      "items": [
+        {
+          "q": "Le site sera-t-il adapté au mobile ?",
+          "a": "Oui. Le responsive fait partie de la conception et les interfaces sont pensées pour fonctionner sur téléphone, tablette et ordinateur."
+        },
+        {
+          "q": "Le référencement naturel est-il inclus ?",
+          "a": "Les fondations SEO techniques et éditoriales nécessaires au site sont intégrées : structure HTML, titres, métadonnées, maillage, sitemap, robots et données structurées lorsque c’est pertinent."
+        },
+        {
+          "q": "Faut-il un abonnement CVTL Lab après la livraison ?",
+          "a": "Non. CVTL Lab n’impose pas d’abonnement mensuel après la livraison. Les éventuels coûts externes comme l’hébergement ou le nom de domaine sont identifiés séparément."
+        },
+        {
+          "q": "Pouvez-vous améliorer un site déjà existant ?",
+          "a": "Oui. Une refonte complète n’est pas toujours nécessaire : le travail peut cibler le responsive, la vitesse, les erreurs, le contenu, le SEO ou la sécurité."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "outil-sur-mesure-bordeaux",
+    "key": "tool",
+    "title": "Outil métier sur mesure à Bordeaux | CVTL Lab",
+    "description": "Développement d’outils métier sur mesure à Bordeaux et en Gironde : suivi clients, stock, commandes, tableaux de bord, formulaires et workflows.",
+    "eyebrow": "Outils métier · Bordeaux & Gironde",
+    "crumb": "Développement d’outil métier sur mesure",
+    "h1": "Des outils métier sur mesure pour travailler plus simplement.",
+    "lead": "Quand un tableur, un logiciel générique ou une accumulation d’outils ne correspond plus à votre fonctionnement, CVTL Lab peut construire une interface adaptée à votre manière de travailler.",
+    "sideLabel": "Service",
+    "sideTitle": "Développement d’outil métier sur mesure",
+    "sideText": "Pour indépendants, commerces, associations et TPE/PME à Bordeaux et en Gironde.",
+    "approach": {
+      "eyebrow": "Approche",
+      "h2": "Construire autour de votre processus, pas l’inverse.",
+      "p": [
+        "Un outil métier sur mesure vise à simplifier une tâche réelle : suivre des clients, centraliser des demandes, gérer des commandes, consolider des données ou donner une vue claire sur l’activité.",
+        "Le projet commence par le fonctionnement actuel. L’objectif est d’identifier les étapes utiles, les informations à conserver et les actions à automatiser avant de choisir la technologie."
+      ]
+    },
+    "scope": {
+      "eyebrow": "Périmètre",
+      "h2": "Exemples d’outils possibles",
+      "items": [
+        "Suivi clients et prospects",
+        "Gestion simple de stock ou d’inventaire",
+        "Suivi de commandes et statuts",
+        "Tableaux de bord internes",
+        "Formulaires métiers",
+        "Centralisation de données dispersées",
+        "Exports Excel/CSV/PDF",
+        "Connexion à des API ou services existants"
+      ]
+    },
+    "cases": {
+      "eyebrow": "Cas d’usage",
+      "h2": "Quand le sur-mesure devient pertinent",
+      "cards": [
+        {
+          "t": "Le tableur devient fragile",
+          "p": "Plusieurs versions circulent, les formules cassent ou les accès deviennent difficiles à gérer."
+        },
+        {
+          "t": "Les informations sont dispersées",
+          "p": "E-mails, fichiers et outils séparés obligent à rechercher la bonne donnée."
+        },
+        {
+          "t": "Le logiciel du marché est surdimensionné",
+          "p": "Vous payez ou utilisez des fonctions inutiles alors que votre besoin est ciblé."
+        },
+        {
+          "t": "Le processus est spécifique",
+          "p": "Votre manière de travailler mérite une interface qui suit vos étapes réelles."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Questions fréquentes",
+      "h2": "Questions sur les outils métier sur mesure.",
+      "items": [
+        {
+          "q": "Faut-il remplacer tous mes outils actuels ?",
+          "a": "Non. Un outil sur mesure peut compléter l’existant et se connecter aux logiciels déjà utilisés lorsque leurs interfaces le permettent."
+        },
+        {
+          "q": "Peut-on commencer petit ?",
+          "a": "Oui. Une première version peut se concentrer sur le besoin prioritaire puis évoluer si l’usage le justifie."
+        },
+        {
+          "q": "Les données peuvent-elles être exportées ?",
+          "a": "Oui, lorsque cela fait partie du besoin, des exports standards comme CSV, Excel ou PDF peuvent être prévus."
+        },
+        {
+          "q": "L’outil peut-il être utilisé sur mobile ?",
+          "a": "Selon le projet, l’interface peut être responsive ou pensée spécifiquement pour une utilisation sur téléphone et tablette."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "automatisation-entreprise-bordeaux",
+    "key": "auto",
+    "title": "Automatisation d’entreprise à Bordeaux | CVTL Lab",
+    "description": "Automatisation de tâches répétitives à Bordeaux et en Gironde : Excel, documents, e-mails, données, API, formulaires et connexions entre outils.",
+    "eyebrow": "Automatisation · Bordeaux & Gironde",
+    "crumb": "Automatisation d’entreprise",
+    "h1": "Automatiser les tâches répétitives de votre entreprise.",
+    "lead": "CVTL Lab conçoit des automatisations pour réduire les manipulations manuelles, fiabiliser les échanges de données et gagner du temps sur les tâches qui reviennent chaque jour ou chaque semaine.",
+    "sideLabel": "Service",
+    "sideTitle": "Automatisation d’entreprise",
+    "sideText": "Pour indépendants, commerces, associations et TPE/PME à Bordeaux et en Gironde.",
+    "approach": {
+      "eyebrow": "Approche",
+      "h2": "Automatiser ce qui vous fait perdre du temps.",
+      "p": [
+        "Recopier des informations, renommer des fichiers, générer des documents, consolider des tableaux, transférer des données entre deux outils : ces petites actions peuvent finir par occuper une part importante du temps de travail.",
+        "Une automatisation utile part d’un processus stable et répétitif. Elle doit rester compréhensible, contrôlable et adaptée aux outils réellement utilisés dans l’entreprise."
+      ]
+    },
+    "scope": {
+      "eyebrow": "Périmètre",
+      "h2": "Exemples d’automatisations",
+      "items": [
+        "Traitement et consolidation de fichiers Excel/CSV",
+        "Génération de documents à partir de données",
+        "Classement ou renommage automatique de fichiers",
+        "Envoi d’e-mails déclenchés par un événement",
+        "Synchronisation entre formulaires et outils internes",
+        "Récupération ou envoi de données via API",
+        "Création de rapports récurrents",
+        "Contrôles automatiques pour limiter les erreurs de saisie"
+      ]
+    },
+    "cases": {
+      "eyebrow": "Cas d’usage",
+      "h2": "Les bons candidats à l’automatisation",
+      "cards": [
+        {
+          "t": "Une tâche répétée souvent",
+          "p": "Plus elle revient, plus l’automatisation peut libérer du temps."
+        },
+        {
+          "t": "Des copier-coller entre outils",
+          "p": "Les mêmes données sont ressaisies plusieurs fois."
+        },
+        {
+          "t": "Des documents produits selon un modèle",
+          "p": "Devis, synthèses, fichiers ou rapports suivent une structure stable."
+        },
+        {
+          "t": "Des erreurs humaines récurrentes",
+          "p": "Une règle automatique peut contrôler ou standardiser certaines étapes."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Questions fréquentes",
+      "h2": "Questions sur l’automatisation d’entreprise.",
+      "items": [
+        {
+          "q": "Peut-on automatiser Excel ?",
+          "a": "Oui. Des traitements, imports, exports et transformations de données peuvent être automatisés selon la structure des fichiers."
+        },
+        {
+          "q": "Faut-il changer de logiciels ?",
+          "a": "Pas nécessairement. L’objectif est d’abord d’exploiter les possibilités des outils déjà utilisés, puis d’ajouter une couche sur mesure si besoin."
+        },
+        {
+          "q": "Une automatisation peut-elle être surveillée ?",
+          "a": "Oui. Selon le contexte, des journaux, messages d’erreur ou validations humaines peuvent être prévus."
+        },
+        {
+          "q": "Est-ce adapté à une petite entreprise ?",
+          "a": "Oui lorsque la tâche est suffisamment répétitive ou sensible aux erreurs. Le périmètre doit simplement rester proportionné au gain attendu."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "intelligence-artificielle-entreprise-bordeaux",
+    "key": "ai",
+    "title": "Intelligence artificielle entreprise Bordeaux | CVTL Lab",
+    "description": "Intégration d’IA utile pour entreprises à Bordeaux et en Gironde : assistants internes, FAQ, aide au choix, traitement de texte et workflows augmentés.",
+    "eyebrow": "Intelligence artificielle · Bordeaux & Gironde",
+    "crumb": "Intégration d’intelligence artificielle",
+    "h1": "Intégrer l’IA là où elle apporte un gain concret.",
+    "lead": "CVTL Lab aide les entreprises à intégrer des fonctions d’intelligence artificielle dans un site, un outil interne ou un processus, sans ajouter de l’IA uniquement pour suivre une tendance.",
+    "sideLabel": "Service",
+    "sideTitle": "Intégration d’intelligence artificielle",
+    "sideText": "Pour indépendants, commerces, associations et TPE/PME à Bordeaux et en Gironde.",
+    "approach": {
+      "eyebrow": "Approche",
+      "h2": "Une IA utile doit résoudre un problème identifiable.",
+      "p": [
+        "L’IA peut aider à rechercher dans une base documentaire, reformuler ou classer du texte, assister une équipe, répondre à des questions fréquentes ou guider un utilisateur. Elle est surtout pertinente quand le résultat peut être contrôlé et intégré à un processus clair.",
+        "Le choix du modèle, des données transmises, du niveau d’automatisation et des validations humaines dépend du risque et de la sensibilité du cas d’usage."
+      ]
+    },
+    "scope": {
+      "eyebrow": "Périmètre",
+      "h2": "Exemples de fonctions IA",
+      "items": [
+        "Assistant interne connecté à une documentation",
+        "FAQ ou aide à la recherche sur un site",
+        "Classification et extraction d’informations dans du texte",
+        "Aide à la rédaction de réponses ou documents",
+        "Résumé de contenus ou dossiers",
+        "Aide au choix à partir de critères définis",
+        "Enrichissement d’un outil métier existant",
+        "Connexion à des API de modèles d’IA"
+      ]
+    },
+    "cases": {
+      "eyebrow": "Cas d’usage",
+      "h2": "Quand envisager une intégration IA",
+      "cards": [
+        {
+          "t": "Beaucoup de texte à traiter",
+          "p": "L’IA peut aider à classer, résumer, extraire ou reformuler."
+        },
+        {
+          "t": "Une documentation difficile à interroger",
+          "p": "Un assistant peut faciliter l’accès à des informations internes bien structurées."
+        },
+        {
+          "t": "Des réponses répétitives",
+          "p": "L’IA peut préparer une réponse, avec validation humaine si nécessaire."
+        },
+        {
+          "t": "Un outil métier à enrichir",
+          "p": "Une fonctionnalité ciblée peut être ajoutée sans transformer toute l’application."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Questions fréquentes",
+      "h2": "Questions sur l’intégration de l’intelligence artificielle.",
+      "items": [
+        {
+          "q": "Utilisez-vous forcément l’IA pour automatiser ?",
+          "a": "Non. Une règle classique est souvent plus fiable et moins coûteuse lorsqu’un processus peut être décrit précisément."
+        },
+        {
+          "q": "Peut-on garder une validation humaine ?",
+          "a": "Oui, et c’est souvent recommandé pour les usages où une erreur aurait une conséquence importante."
+        },
+        {
+          "q": "Les données peuvent-elles être sensibles ?",
+          "a": "La confidentialité doit être étudiée avant toute intégration. Les données envoyées à un fournisseur d’IA et ses conditions de traitement doivent être choisies en fonction du cas d’usage."
+        },
+        {
+          "q": "Peut-on ajouter de l’IA à un outil existant ?",
+          "a": "Oui si l’architecture et les API disponibles le permettent. Une fonctionnalité isolée peut parfois suffire."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "nom-domaine-email-professionnel-bordeaux",
+    "key": "domain",
+    "title": "Nom de domaine & e-mail pro Bordeaux | CVTL Lab",
+    "description": "Configuration de nom de domaine, DNS et e-mail professionnel à Bordeaux et en Gironde : SPF, DKIM, DMARC, redirections et sécurisation.",
+    "eyebrow": "Domaine & e-mail · Bordeaux & Gironde",
+    "crumb": "Configuration de domaine et e-mail professionnel",
+    "h1": "Nom de domaine et e-mail professionnel correctement configurés.",
+    "lead": "CVTL Lab peut mettre en place ou remettre au propre votre domaine, vos DNS et vos adresses e-mail professionnelles afin d’éviter les configurations fragiles et les problèmes de délivrabilité.",
+    "sideLabel": "Service",
+    "sideTitle": "Configuration de domaine et e-mail professionnel",
+    "sideText": "Pour indépendants, commerces, associations et TPE/PME à Bordeaux et en Gironde.",
+    "approach": {
+      "eyebrow": "Approche",
+      "h2": "Une présence professionnelle commence aussi par l’infrastructure.",
+      "p": [
+        "Un domaine bien configuré ne se limite pas à afficher un site. Il sert aussi aux e-mails, aux redirections, aux sous-domaines et à différents services connectés.",
+        "Une mauvaise configuration DNS peut provoquer des interruptions, des e-mails refusés ou des problèmes d’authentification. Le but est d’obtenir une configuration simple, documentée et cohérente avec les services utilisés."
+      ]
+    },
+    "scope": {
+      "eyebrow": "Périmètre",
+      "h2": "Interventions possibles",
+      "items": [
+        "Achat ou transfert de nom de domaine",
+        "Configuration DNS",
+        "Création d’adresses e-mail professionnelles",
+        "Alias et redirections",
+        "Enregistrements SPF",
+        "Signature DKIM",
+        "Politique DMARC",
+        "Sous-domaines et vérifications de services tiers"
+      ]
+    },
+    "cases": {
+      "eyebrow": "Cas d’usage",
+      "h2": "Situations fréquentes",
+      "cards": [
+        {
+          "t": "Passer d’une adresse personnelle à une adresse pro",
+          "p": "Utiliser une adresse liée à votre propre domaine."
+        },
+        {
+          "t": "Changer d’hébergeur ou de messagerie",
+          "p": "Préparer les DNS pour limiter les interruptions."
+        },
+        {
+          "t": "Améliorer la délivrabilité",
+          "p": "Vérifier l’authentification du domaine et la cohérence des enregistrements."
+        },
+        {
+          "t": "Connecter un nouveau service",
+          "p": "Ajouter proprement les enregistrements demandés par un outil SaaS ou une plateforme."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Questions fréquentes",
+      "h2": "Questions sur le domaine et l’e-mail professionnel.",
+      "items": [
+        {
+          "q": "Pouvez-vous créer plusieurs alias e-mail ?",
+          "a": "Oui, selon les possibilités du fournisseur de messagerie choisi."
+        },
+        {
+          "q": "SPF, DKIM et DMARC sont-ils utiles ?",
+          "a": "Oui. Ces mécanismes participent à l’authentification des e-mails et à la protection du domaine contre certaines usurpations."
+        },
+        {
+          "q": "Peut-on conserver le même nom de domaine en changeant d’hébergeur ?",
+          "a": "Oui. Le domaine, la messagerie et l’hébergement peuvent être gérés par des prestataires différents si les DNS sont correctement configurés."
+        },
+        {
+          "q": "Intervenez-vous sur un domaine déjà existant ?",
+          "a": "Oui. Une configuration existante peut être auditée et corrigée sans forcément transférer le domaine."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "refonte-securite-performance-site-bordeaux",
+    "key": "audit",
+    "title": "Refonte, performance & sécurité web Bordeaux | CVTL Lab",
+    "description": "Audit et amélioration de sites web à Bordeaux et en Gironde : responsive, vitesse, erreurs, sécurité, SEO technique et refonte ciblée.",
+    "eyebrow": "Amélioration web · Bordeaux & Gironde",
+    "crumb": "Refonte, performance et sécurité web",
+    "h1": "Améliorer un site existant sans forcément repartir de zéro.",
+    "lead": "CVTL Lab corrige, modernise et optimise les sites existants : responsive, performance, erreurs de code, SEO technique, sécurité et qualité générale.",
+    "sideLabel": "Service",
+    "sideTitle": "Refonte, performance et sécurité web",
+    "sideText": "Pour indépendants, commerces, associations et TPE/PME à Bordeaux et en Gironde.",
+    "approach": {
+      "eyebrow": "Approche",
+      "h2": "Corriger ce qui freine réellement le site.",
+      "p": [
+        "Un site peut rester visuellement acceptable tout en accumulant des problèmes : lenteur, erreurs JavaScript, mauvais affichage mobile, dépendances inutiles, formulaires fragiles, balises SEO incohérentes ou configuration de sécurité minimale.",
+        "L’intervention peut être ciblée sur un problème précis ou commencer par un audit technique complet pour prioriser les corrections selon leur impact."
+      ]
+    },
+    "scope": {
+      "eyebrow": "Périmètre",
+      "h2": "Points pouvant être audités et corrigés",
+      "items": [
+        "Responsive mobile et tablette",
+        "Core Web Vitals et vitesse de chargement",
+        "HTML, CSS et JavaScript",
+        "Erreurs console et ressources cassées",
+        "SEO technique et métadonnées",
+        "Accessibilité de base et navigation clavier",
+        "Formulaires et anti-spam",
+        "En-têtes et politiques de sécurité selon l’hébergement"
+      ]
+    },
+    "cases": {
+      "eyebrow": "Cas d’usage",
+      "h2": "Quand faire auditer un site",
+      "cards": [
+        {
+          "t": "Le site est lent",
+          "p": "Les images, scripts ou styles peuvent être optimisés."
+        },
+        {
+          "t": "Le mobile est mauvais",
+          "p": "Les breakpoints, tailles, menus et formulaires peuvent être repris."
+        },
+        {
+          "t": "Le référencement stagne",
+          "p": "Une base technique mal structurée peut limiter l’exploration et la compréhension des pages."
+        },
+        {
+          "t": "Des bugs apparaissent",
+          "p": "Une revue du code et des dépendances permet d’identifier la cause au lieu d’empiler des correctifs temporaires."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Questions fréquentes",
+      "h2": "Questions sur la refonte, la performance et la sécurité web.",
+      "items": [
+        {
+          "q": "Faut-il refaire complètement le site ?",
+          "a": "Non. Si la base est saine, une intervention ciblée peut être plus pertinente qu’une refonte complète."
+        },
+        {
+          "q": "Pouvez-vous intervenir sur un site codé par quelqu’un d’autre ?",
+          "a": "Oui, après inspection du code, de la technologie utilisée et des accès disponibles."
+        },
+        {
+          "q": "La vitesse peut-elle être améliorée sans changer le design ?",
+          "a": "Souvent oui, en travaillant sur les images, les ressources, le chargement, le cache et certaines animations."
+        },
+        {
+          "q": "Un audit comprend-il le SEO ?",
+          "a": "Le SEO technique peut être inclus : structure, indexation, métadonnées, maillage, performance et données structurées selon le site."
+        }
+      ]
+    }
+  }
+]
