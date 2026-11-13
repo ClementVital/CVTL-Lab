@@ -44,16 +44,21 @@ Il est injecté en SVG inline (`logo()` dans `templates.mjs`) : chaque forme est
 - Passable : bouton, `Entrée`, `Espace`, `Échap` ou clic.
 - Forcer l'intro pour la démo : `https://cvtllab.fr/?intro=1`.
 
-## Déploiement (GitHub Pages)
+## Déploiement (Cloudflare Workers Builds, depuis GitHub)
 
-1. **Settings → Pages → Build and deployment → Source : GitHub Actions**.
-2. Fusionner sur `main` → le workflow `.github/workflows/deploy.yml` construit, vérifie, publie.
-3. **Settings → Pages → Custom domain : `cvtllab.fr`** (le fichier `public/CNAME` est déjà fourni) puis cocher *Enforce HTTPS*.
-4. DNS (Cloudflare reste utilisable comme gestionnaire DNS uniquement) :
-   - 4 enregistrements `A` sur `@` → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   - `CNAME` `www` → `<utilisateur>.github.io`
-   - mettre ces enregistrements en **DNS only** (nuage gris) pendant la validation du certificat.
-5. Une fois le site servi par GitHub, le Worker `cvtllab` de Cloudflare peut être supprimé.
+Le code vit sur GitHub ; Cloudflare ne fait que **construire et servir** à chaque push sur `main`.
+La config est dans `wrangler.jsonc` (Worker `cvtllab`, assets = `dist/`).
+
+Connexion (une seule fois) : Cloudflare → Workers & Pages → `cvtllab` → **Settings → Builds → Connect** → dépôt `ClementVital/CVTL-Lab`, branche `main` :
+
+| Champ | Valeur |
+|---|---|
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Root directory | `/` |
+
+Le domaine `cvtllab.fr` reste rattaché au Worker : aucun changement DNS.
+La CI GitHub (`.github/workflows/ci.yml`) exécute `build` + `check` sur chaque push et pull request.
 
 ## Sécurité
 

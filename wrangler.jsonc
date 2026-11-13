@@ -1,0 +1,11 @@
+{
+  // Worker « cvtllab » : sert le dossier dist/ généré par `npm run build`.
+  // Cloudflare (Workers Builds) clone ce dépôt GitHub, lance le build puis `wrangler deploy`.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cvtllab",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
