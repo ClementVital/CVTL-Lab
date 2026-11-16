@@ -1,53 +1,66 @@
-// Génération des pages — CVTL Lab
-import { SITE, SHORT, esc, logo, icon, head, header, footer, tail, jsonLd, faqLd } from './templates.mjs';
-
-const arrow = '<svg class="arr" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+// Génération des pages — CVTL Lab (v3 : minimaliste, lecture à plusieurs niveaux)
+// Principe : niveau 1 = l'essentiel, visible. Niveau 2 = détails, à la demande (onglets, volets repliables).
+// Aucune information n'est supprimée : tout reste dans le HTML (donc indexable) mais replié.
+import { SITE, SHORT, UI, esc, logo, icon, head, header, footer, tail, jsonLd, faqLd } from './templates.mjs';
 
 const COMMUNES = ['Ambarès-et-Lagrave', 'Ambès', 'Artigues-près-Bordeaux', 'Bassens', 'Bègles', 'Blanquefort', 'Bordeaux', 'Bouliac', 'Bruges', 'Carbon-Blanc', 'Cenon', 'Eysines', 'Floirac', 'Gradignan', 'Le Bouscat', 'Le Haillan', 'Lormont', 'Martignas-sur-Jalle', 'Mérignac', 'Parempuyre', 'Pessac', 'Saint-Aubin-de-Médoc', 'Saint-Louis-de-Montferrand', 'Saint-Médard-en-Jalles', 'Saint-Vincent-de-Paul', 'Le Taillan-Médoc', 'Talence', 'Villenave-d’Ornon'];
 
 const HOME_CARDS = {
-  web: { n: '01', type: 'Web', h: 'Sites web', p: 'Création ou amélioration d’un site clair, rapide et adapté aux mobiles.', tags: ['Site vitrine', 'Catalogue', 'Formulaire', 'Performance'], link: 'Création de site web à Bordeaux', span: 'span-4' },
-  tool: { n: '02', type: 'Métier', h: 'Outils sur mesure', p: 'Des outils simples construits autour de votre façon de travailler.', tags: ['Stock', 'Clients', 'Commandes', 'Tableaux de bord'], link: 'Outils métier sur mesure à Bordeaux', span: 'span-2' },
-  auto: { n: '03', type: 'Temps', h: 'Automatisation', p: 'Automatiser les tâches répétitives pour gagner du temps au quotidien.', tags: ['Excel', 'Documents', 'Données', 'Connexions d’outils'], link: 'Automatisation d’entreprise à Bordeaux', span: 'span-2' },
-  ai: { n: '04', type: 'IA', h: 'Intelligence artificielle', p: 'Ajouter de l’IA quand elle apporte un gain concret à votre activité.', tags: ['FAQ', 'SAV', 'Assistant interne', 'Aide au choix'], link: 'Solutions IA pour entreprises à Bordeaux', span: 'span-2' },
-  domain: { n: '05', type: 'Présence', h: 'Domaine et e-mail', p: 'Mettre en place proprement votre domaine et vos adresses professionnelles.', tags: ['Nom de domaine', 'E-mail pro', 'DNS', 'Sécurisation'], link: 'Domaine et e-mail professionnel à Bordeaux', span: 'span-2' },
-  audit: { n: '06', type: 'Optimisation', h: 'Amélioration et sécurité', p: 'Moderniser, corriger ou sécuriser un site existant sans repartir de zéro.', tags: ['Refonte', 'Vitesse', 'Corrections', 'Sécurité'], link: 'Refonte, performance et sécurité web à Bordeaux', span: 'span-6' },
+  web: { type: 'Web', h: 'Sites web', p: 'Création ou amélioration d’un site clair, rapide et adapté aux mobiles.', tags: ['Site vitrine', 'Catalogue', 'Formulaire', 'Performance'], link: 'Création de site web à Bordeaux' },
+  tool: { type: 'Métier', h: 'Outils sur mesure', p: 'Des outils simples construits autour de votre façon de travailler.', tags: ['Stock', 'Clients', 'Commandes', 'Tableaux de bord'], link: 'Outils métier sur mesure à Bordeaux' },
+  auto: { type: 'Temps', h: 'Automatisation', p: 'Automatiser les tâches répétitives pour gagner du temps au quotidien.', tags: ['Excel', 'Documents', 'Données', 'Connexions d’outils'], link: 'Automatisation d’entreprise à Bordeaux' },
+  ai: { type: 'IA', h: 'Intelligence artificielle', p: 'Ajouter de l’IA quand elle apporte un gain concret à votre activité.', tags: ['FAQ', 'SAV', 'Assistant interne', 'Aide au choix'], link: 'Solutions IA pour entreprises à Bordeaux' },
+  domain: { type: 'Présence', h: 'Domaine et e-mail', p: 'Mettre en place proprement votre domaine et vos adresses professionnelles.', tags: ['Nom de domaine', 'E-mail pro', 'DNS', 'Sécurisation'], link: 'Domaine et e-mail professionnel à Bordeaux' },
+  audit: { type: 'Optimisation', h: 'Amélioration et sécurité', p: 'Moderniser, corriger ou sécuriser un site existant sans repartir de zéro.', tags: ['Refonte', 'Vitesse', 'Corrections', 'Sécurité'], link: 'Refonte, performance et sécurité web à Bordeaux' },
 };
 
-const checkboxNeeds = [
+const NEEDS = [
   ['need-web', 'Créer un site web', 'Créer un site web'],
-  ['need-tool', 'Créer un outil sur mesure', 'Créer un outil sur mesure'],
+  ['need-tool', 'Créer un outil sur mesure', 'Outil sur mesure'],
   ['need-auto', 'Automatiser une tâche', 'Automatiser une tâche'],
   ['need-existing', 'Améliorer un site ou un outil existant', 'Améliorer un existant'],
-  ['need-ai', 'Ajouter une fonctionnalité IA', 'Ajouter une fonctionnalité IA'],
+  ['need-ai', 'Ajouter une fonctionnalité IA', 'Ajouter de l’IA'],
   ['need-unknown', 'Je ne sais pas encore', 'Je ne sais pas encore'],
 ];
 
-function marquee(items, cls = '') {
-  const row = items.map((t) => `<li>${esc(t)}</li>`).join('');
-  return `<div class="marquee ${cls}" data-theme="${cls.includes('dark') ? 'dark' : 'light'}" aria-hidden="true"><ul class="marquee-track">${row}${row}</ul></div>`;
-}
+/** Volet repliable (niveau 2) — <details> natif, animé en JS. */
+const more = (summary, inner, { cls = '', open = false, icon: ic = '' } = {}) =>
+  `<details class="more ${cls}"${open ? ' open' : ''}><summary>${ic ? `<span class="more-ic">${ic}</span>` : ''}<span class="more-t">${summary}</span><span class="more-chev">${UI.chevron}</span></summary><div class="more-body"><div class="more-in">${inner}</div></div></details>`;
+
+const secHead = (eyebrow, h2, { ic = '', lead = '' } = {}) =>
+  `<div class="sec-head"><p class="eyebrow" data-reveal>${eyebrow}</p><h2 data-reveal>${h2}</h2>${lead ? `<p class="sec-lead" data-reveal>${lead}</p>` : ''}</div>`;
 
 /* ------------------------------------------------------------------ ACCUEIL */
 export function home(services, ld) {
-  const bySlug = Object.fromEntries(services.map((s) => [s.key, s]));
-  const cards = Object.entries(HOME_CARDS)
-    .map(([key, c]) => {
-      const s = bySlug[key];
-      return `<article class="card ${c.span}" data-spot data-reveal>
-<div class="card-top"><span class="card-num">${c.n}</span><span class="card-type">${c.type}</span></div>
-<div class="card-icon">${icon(key)}</div>
+  const byKey = Object.fromEntries(services.map((s) => [s.key, s]));
+  const keys = Object.keys(HOME_CARDS);
+
+  const tabs = keys
+    .map((k, i) => {
+      const c = HOME_CARDS[k];
+      return `<button class="tab" type="button" role="tab" id="tab-${k}" aria-controls="panel-${k}" aria-selected="${i === 0}"><span class="tab-ic">${icon(k)}</span><span class="tab-t"><b>${c.h}</b><small>${c.type}</small></span><span class="tab-n">0${i + 1}</span></button>`;
+    })
+    .join('');
+  const panels = keys
+    .map((k, i) => {
+      const c = HOME_CARDS[k];
+      return `<article class="panel" role="tabpanel" id="panel-${k}" aria-labelledby="tab-${k}"${i ? ' hidden' : ''}>
+<div class="panel-top"><span class="panel-ic">${icon(k)}</span><span class="pill">${c.type}</span></div>
 <h3>${c.h}</h3>
 <p>${c.p}</p>
 <ul class="tags">${c.tags.map((t) => `<li>${t}</li>`).join('')}</ul>
-<a class="card-link" href="${s.slug}.html"><span>Découvrir : ${c.link}</span>${arrow}</a>
+<a class="panel-link" href="${byKey[k].slug}.html"><span>Découvrir : ${c.link}</span>${UI.arrow}</a>
 </article>`;
     })
     .join('\n');
 
-  const needs = checkboxNeeds
-    .map(([id, value, label], i) => `<div class="choice-option"><input id="${id}" name="Besoin principal" type="radio" value="${value}"${i === 0 ? ' required' : ''}><label for="${id}"><span class="choice-mark" aria-hidden="true"></span>${label}</label></div>`)
-    .join('\n');
+  const needs = NEEDS.map(([id, value, label], i) => `<div class="choice-option"><input id="${id}" name="Besoin principal" type="radio" value="${value}"${i === 0 ? ' required' : ''}><label for="${id}"><span class="choice-mark" aria-hidden="true"></span>${label}</label></div>`).join('\n');
+
+  const steps = [
+    ['01', 'Échange', 'Vous m’expliquez le besoin', 'Ce que vous faites aujourd’hui, ce qui bloque et ce que vous voulez améliorer.'],
+    ['02', 'Proposition', 'Je vous propose une solution', 'Vous savez ce qui sera réalisé, pourquoi et quels coûts externes peuvent exister.'],
+    ['03', 'Livraison', 'Je réalise et je vous livre', 'La solution est mise en place, expliquée et prête à être utilisée.'],
+  ];
 
   return `${head({
     page: 'home',
@@ -77,134 +90,116 @@ ${header({ home: true })}
 <main id="contenu">
 
 <section class="hero" id="accueil" data-theme="dark">
-<div class="hero-bg" aria-hidden="true"><div class="hero-lines"></div><div class="hero-glow"></div><div class="hero-spot"></div><div class="hero-noise"></div></div>
+<div class="hero-bg" aria-hidden="true"><div class="hero-lines"></div><div class="hero-glow"></div><div class="hero-spot"></div></div>
 <div class="container hero-inner">
 <div class="hero-copy">
 <p class="eyebrow" data-hero>Bordeaux · Gironde</p>
 <h1 data-split data-hero>Sites web, automatisations et outils sur mesure à Bordeaux.</h1>
 <p class="lead" data-hero>CVTL Lab conçoit des solutions numériques rapides, claires et utiles pour les indépendants, commerces, associations et TPE/PME de Bordeaux et de la Gironde.</p>
 <div class="hero-actions" data-hero>
-<a class="button button-primary" href="#contact" data-magnetic><span>Parler de mon projet</span>${arrow}</a>
+<a class="button button-primary" href="#contact" data-magnetic><span>Parler de mon projet</span>${UI.arrow}</a>
 <a class="button button-ghost" href="#services" data-magnetic><span>Voir les services</span></a>
 </div>
 </div>
-<div class="hero-visual" data-hero aria-hidden="true">
-<div class="orbit orbit-1"></div><div class="orbit orbit-2"></div>
-<div class="hero-logo" id="heroLogo">${logo('hero-logo-svg')}</div>
-<span class="float-chip chip-1">Sites web</span>
-<span class="float-chip chip-2">Outils métier</span>
-<span class="float-chip chip-3">Automatisation</span>
-<span class="float-chip chip-4">IA utile</span>
+<div class="hero-visual" data-hero aria-hidden="true"><div class="hero-logo" id="heroLogo">${logo('hero-logo-svg')}</div></div>
 </div>
-<aside class="promise" aria-label="Frais récurrents CVTL Lab" data-hero>
-<p class="promise-label">Après la livraison</p>
-<div class="promise-row"><div class="promise-value"><span data-countdown="0" data-from="149">0</span> €</div>
-<div><strong>d’abonnement CVTL Lab</strong><p>Pas de forfait mensuel obligatoire ajouté par CVTL Lab.</p></div></div>
-</aside>
+<div class="container kpis-wrap" data-hero>
+<dl class="kpis" aria-label="L’essentiel">
+<div class="kpi"><dt>Après la livraison</dt><dd><b><span data-countdown="0" data-from="149">0</span> €</b><span>d’abonnement CVTL Lab</span></dd></div>
+<div class="kpi"><dt>Bordeaux Métropole</dt><dd><b data-count="28">28</b><span>communes couvertes</span></dd></div>
+<div class="kpi"><dt>Du début à la fin</dt><dd><b data-count="1">1</b><span>interlocuteur unique</span></dd></div>
+</dl>
 </div>
-<a class="scroll-cue" href="#services" aria-label="Faire défiler vers les services"><span>Défiler</span><i></i></a>
 </section>
 
-${marquee(['Sites web', 'Outils sur mesure', 'Automatisation', 'Intelligence artificielle', 'Domaine & e-mail', 'Amélioration & sécurité'], 'marquee-dark')}
-
-<section class="services" id="services" data-theme="light">
+<section class="sec" id="services" data-theme="light">
 <div class="container">
-<div class="section-head">
-<div>
-<p class="eyebrow" data-reveal>Services</p>
-<h2 data-split>Création web, outils métier, automatisation et IA.</h2>
+${secHead('Services', 'Création web, outils métier, automatisation et IA.', { lead: 'Chaque service répond à un besoin concret : être visible, gagner du temps, fiabiliser un processus ou mieux exploiter vos outils numériques.' })}
+<div class="svc" data-tabs data-reveal>
+<div class="svc-tabs" role="tablist" aria-label="Services" aria-orientation="vertical">${tabs}</div>
+<div class="svc-panels">
+${panels}
 </div>
-<p data-reveal>Chaque service répond à un besoin concret : être visible, gagner du temps, fiabiliser un processus ou mieux exploiter vos outils numériques.</p>
-</div>
-<div class="bento">
-${cards}
 </div>
 </div>
 </section>
 
-<section class="local" id="gironde" data-theme="light">
-<div class="container local-grid">
-<div>
-<p class="eyebrow" data-reveal>Bordeaux · Gironde</p>
-<h2 data-split>Un studio numérique local pour vos projets en Gironde.</h2>
-</div>
-<div class="local-copy" data-reveal>
-<p>CVTL Lab est basé au Taillan-Médoc et accompagne les projets numériques à Bordeaux, dans les 28 communes de Bordeaux Métropole et plus largement en Gironde. Les échanges peuvent se faire à distance et, lorsque c’est utile au projet, en personne autour de Bordeaux.</p>
-<p>Création de site internet, automatisation, outil métier, intégration d’IA, domaine, e-mail professionnel, refonte, performance ou sécurité : l’objectif reste le même, construire une solution adaptée à l’activité plutôt qu’empiler des outils.</p>
-<a class="button button-outline" href="services-numeriques-bordeaux-gironde.html" data-magnetic><span>Voir les zones d’intervention</span>${arrow}</a>
-</div>
-</div>
-<div class="container stats">
-<div class="stat" data-reveal><b data-count="28">28</b><span>communes de Bordeaux Métropole</span></div>
-<div class="stat" data-reveal><b data-count="1">1</b><span>interlocuteur, du premier échange à la livraison</span></div>
-<div class="stat" data-reveal><b>33</b><span>La Gironde, à distance et en personne autour de Bordeaux</span></div>
-</div>
-${marquee(COMMUNES, 'marquee-light')}
-</section>
-
-<section class="pricing" id="tarifs" data-theme="dark">
-<div class="pricing-glow" aria-hidden="true"></div>
+<section class="sec sec-soft" id="gironde" data-theme="light">
 <div class="container">
-<div class="pricing-head">
-<p class="eyebrow" data-reveal>Après la livraison</p>
-<h2 data-split>Vous payez le projet, pas un abonnement.</h2>
-<p class="lead" data-reveal>CVTL Lab n’ajoute pas ensuite de forfait mensuel obligatoire. Les éventuels services externes sont identifiés avant le lancement.</p>
-</div>
-<div class="zero-list" aria-label="Frais récurrents CVTL Lab">
-<article class="zero-item" data-reveal><span class="zero-value"><span data-countdown="0" data-from="99">0</span> €</span><h3>Abonnement CVTL Lab</h3><p>Aucun abonnement mensuel après la livraison.</p></article>
-<article class="zero-item" data-reveal><span class="zero-value"><span data-countdown="0" data-from="99">0</span> €</span><h3>Frais de service récurrents</h3><p>Pas de commission ni de frais mensuels ajoutés par CVTL Lab.</p></article>
-<article class="zero-item" data-reveal><span class="zero-value"><span data-countdown="0" data-from="99">0</span> €</span><h3>Garantie corrective</h3><p>Les anomalies directement liées à la solution livrée sont corrigées selon les conditions et la durée prévues au devis.</p></article>
-</div>
-<p class="pricing-note" data-reveal>Les évolutions fonctionnelles, ajouts de contenu et interventions liées à des services tiers sont chiffrés séparément si nécessaire. Un nom de domaine, un hébergement, une API ou un logiciel tiers peut avoir son propre coût, annoncé avant le lancement.</p>
-</div>
-</section>
-
-<section class="method" id="methode" data-theme="light">
-<div class="container method-grid">
-<div class="method-head">
-<p class="eyebrow" data-reveal>Méthode</p>
-<h2 data-split>Simple du début à la livraison.</h2>
-<p data-reveal>Échange autour de Bordeaux quand c’est possible, sinon en visioconférence.</p>
-</div>
-<div class="steps-wrap" id="steps"><span class="steps-line" aria-hidden="true"><i></i></span>
-<ol class="steps">
-<li class="step" data-reveal><span class="step-dot" aria-hidden="true"></span><span class="step-tag">01 · Échange</span><h3>Vous m’expliquez le besoin</h3><p>Ce que vous faites aujourd’hui, ce qui bloque et ce que vous voulez améliorer.</p></li>
-<li class="step" data-reveal><span class="step-dot" aria-hidden="true"></span><span class="step-tag">02 · Proposition</span><h3>Je vous propose une solution</h3><p>Vous savez ce qui sera réalisé, pourquoi et quels coûts externes peuvent exister.</p></li>
-<li class="step" data-reveal><span class="step-dot" aria-hidden="true"></span><span class="step-tag">03 · Livraison</span><h3>Je réalise et je vous livre</h3><p>La solution est mise en place, expliquée et prête à être utilisée.</p></li>
-</ol></div>
-</div>
-</section>
-
-<section class="about" id="apropos" data-theme="light">
-<div class="about-mark" aria-hidden="true" data-parallax="-0.12">${logo('about-logo')}</div>
-<div class="container about-grid">
-<div class="about-title">
-<p class="eyebrow" data-reveal>À propos</p>
-<h2 data-split>Un interlocuteur unique, basé au Taillan-Médoc en Gironde.</h2>
-</div>
-<div class="about-copy">
-<p data-reveal>Je suis étudiant ingénieur et passionné par l’informatique, le développement et l’intelligence artificielle. J’ai créé CVTL Lab pour mettre ces outils au service d’entreprises locales avec une approche directe, compréhensible et adaptée à leur quotidien.</p>
-<p data-reveal>Quand c’est pertinent, je privilégie les échanges en personne autour de Bordeaux afin de mieux comprendre le besoin et de garder une relation simple tout au long du projet.</p>
-<p class="about-note" data-reveal>Vous gardez un seul interlocuteur du premier échange jusqu’à la livraison.</p>
-</div>
-</div>
-</section>
-
-<section class="contact" id="contact" data-theme="light">
-<div class="container contact-shell">
-<div class="contact-intro" data-reveal>
-<div class="contact-intro-bg" aria-hidden="true"></div>
-<p class="eyebrow">Contact</p>
-<h2>Parlez-moi de votre projet.</h2>
-<p>Commencez par l’essentiel. Les précisions de délai, budget ou entreprise restent facultatives.</p>
-<ul class="contact-points">
-<li><span class="contact-dot" aria-hidden="true"></span><span>Pas besoin de connaître la solution technique.</span></li>
-<li><span class="contact-dot" aria-hidden="true"></span><span>Les champs marqués d’un astérisque sont les seuls obligatoires.</span></li>
-<li><span class="contact-dot" aria-hidden="true"></span><span>Vous pouvez aussi simplement décrire votre problème dans le message.</span></li>
+${secHead('Bordeaux · Gironde', 'Un studio numérique local pour vos projets en Gironde.', { lead: 'CVTL Lab est basé au Taillan-Médoc et accompagne les projets numériques à Bordeaux, dans les 28 communes de Bordeaux Métropole et plus largement en Gironde.' })}
+<ul class="tiles" data-reveal>
+<li class="tile"><span class="tile-ic">${UI.pin}</span><b>Le Taillan-Médoc</b><span>Base du studio</span></li>
+<li class="tile"><span class="tile-ic">${UI.map}</span><b>28 communes</b><span>Bordeaux Métropole</span></li>
+<li class="tile"><span class="tile-ic">${UI.globe}</span><b>Toute la Gironde</b><span>À distance</span></li>
+<li class="tile"><span class="tile-ic">${UI.people}</span><b>En personne</b><span>Autour de Bordeaux</span></li>
 </ul>
-<a class="contact-direct" href="mailto:${SITE.email}">${SITE.email}</a>
+<div data-reveal>
+${more('Détails et zones d’intervention', `<p>Les échanges peuvent se faire à distance et, lorsque c’est utile au projet, en personne autour de Bordeaux.</p>
+<p>Création de site internet, automatisation, outil métier, intégration d’IA, domaine, e-mail professionnel, refonte, performance ou sécurité : l’objectif reste le même, construire une solution adaptée à l’activité plutôt qu’empiler des outils.</p>
+<p class="more-sub">Les 28 communes de Bordeaux Métropole</p>
+<ul class="chips">${COMMUNES.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>
+<a class="button button-outline" href="services-numeriques-bordeaux-gironde.html"><span>Voir les zones d’intervention</span>${UI.arrow}</a>`, { icon: UI.info })}
 </div>
-<div class="contact-form-card" data-reveal>
+</div>
+</section>
+
+<section class="sec" id="tarifs" data-theme="light">
+<div class="container">
+${secHead('Après la livraison', 'Vous payez le projet, pas un abonnement.', { lead: 'CVTL Lab n’ajoute pas ensuite de forfait mensuel obligatoire. Les éventuels services externes sont identifiés avant le lancement.' })}
+<ul class="metrics" aria-label="Frais récurrents CVTL Lab" data-reveal>
+<li class="metric"><b><span data-countdown="0" data-from="99">0</span> €</b><span>Abonnement CVTL Lab</span></li>
+<li class="metric"><b><span data-countdown="0" data-from="99">0</span> €</b><span>Frais de service récurrents</span></li>
+<li class="metric"><b><span data-countdown="0" data-from="99">0</span> €</b><span>Garantie corrective</span></li>
+</ul>
+<div data-reveal>
+${more('Détails et conditions', `<ul class="rows">
+<li>${UI.check}<div><b>Abonnement CVTL Lab</b><span>Aucun abonnement mensuel après la livraison. Pas de forfait mensuel obligatoire ajouté par CVTL Lab.</span></div></li>
+<li>${UI.check}<div><b>Frais de service récurrents</b><span>Pas de commission ni de frais mensuels ajoutés par CVTL Lab.</span></div></li>
+<li>${UI.check}<div><b>Garantie corrective</b><span>Les anomalies directement liées à la solution livrée sont corrigées selon les conditions et la durée prévues au devis.</span></div></li>
+</ul>
+<p class="note">Les évolutions fonctionnelles, ajouts de contenu et interventions liées à des services tiers sont chiffrés séparément si nécessaire. Un nom de domaine, un hébergement, une API ou un logiciel tiers peut avoir son propre coût, annoncé avant le lancement.</p>`, { icon: UI.info })}
+</div>
+</div>
+</section>
+
+<section class="sec sec-soft" id="methode" data-theme="light">
+<div class="container">
+${secHead('Méthode', 'Simple du début à la livraison.', { lead: 'Échange autour de Bordeaux quand c’est possible, sinon en visioconférence.' })}
+<div class="stepper" data-tabs data-stepper data-reveal>
+<div class="stepper-nav" role="tablist" aria-label="Étapes du projet">
+<span class="stepper-line" aria-hidden="true"><i></i></span>
+${steps.map(([n, tag, , ], i) => `<button class="step-btn" type="button" role="tab" id="step-${i}" aria-controls="steppanel-${i}" aria-selected="${i === 0}"><span class="step-n">${n}</span><span class="step-l">${tag}</span></button>`).join('')}
+</div>
+<div class="stepper-panels">
+${steps.map(([n, tag, h, p], i) => `<div class="step-panel" role="tabpanel" id="steppanel-${i}" aria-labelledby="step-${i}"${i ? ' hidden' : ''}><span class="step-tag">${n} · ${tag}</span><h3>${h}</h3><p>${p}</p></div>`).join('')}
+</div>
+</div>
+</div>
+</section>
+
+<section class="sec" id="apropos" data-theme="light">
+<div class="container narrow">
+${secHead('À propos', 'Un interlocuteur unique, basé au Taillan-Médoc en Gironde.')}
+<p class="about-note" data-reveal>Vous gardez un seul interlocuteur du premier échange jusqu’à la livraison.</p>
+<div data-reveal>
+${more('Qui je suis', `<p>Je suis étudiant ingénieur et passionné par l’informatique, le développement et l’intelligence artificielle. J’ai créé CVTL Lab pour mettre ces outils au service d’entreprises locales avec une approche directe, compréhensible et adaptée à leur quotidien.</p>
+<p>Quand c’est pertinent, je privilégie les échanges en personne autour de Bordeaux afin de mieux comprendre le besoin et de garder une relation simple tout au long du projet.</p>`, { icon: UI.user })}
+</div>
+</div>
+</section>
+
+<section class="sec sec-soft" id="contact" data-theme="light">
+<div class="container contact-shell">
+<div class="contact-side">
+<p class="eyebrow" data-reveal>Contact</p>
+<h2 data-reveal>Parlez-moi de votre projet.</h2>
+<p class="sec-lead" data-reveal>Commencez par l’essentiel. Les précisions de délai, budget ou entreprise restent facultatives.</p>
+<a class="mail-pill" href="mailto:${SITE.email}" data-reveal><span>${SITE.email}</span>${UI.arrow}</a>
+<div data-reveal>
+${more('Bon à savoir', `<ul class="ticks"><li>${UI.check}<span>Pas besoin de connaître la solution technique.</span></li><li>${UI.check}<span>Les champs marqués d’un astérisque sont les seuls obligatoires.</span></li><li>${UI.check}<span>Vous pouvez aussi simplement décrire votre problème dans le message.</span></li></ul>`, { icon: UI.info })}
+</div>
+</div>
+<div class="form-card" data-reveal>
 <h3>Votre demande</h3>
 <p class="form-intro">Remplissez le formulaire et je recevrai les informations directement par e-mail.</p>
 <form id="contactForm" accept-charset="UTF-8" action="${SITE.formAction}" method="POST">
@@ -215,19 +210,20 @@ ${marquee(COMMUNES, 'marquee-light')}
 <div class="form-field"><label class="form-label" for="name">Nom et prénom *</label><input autocomplete="name" class="form-control" id="name" maxlength="100" name="Nom" placeholder="Votre nom" required type="text"></div>
 <div class="form-field"><label class="form-label" for="email">E-mail *</label><input autocomplete="email" class="form-control" id="email" maxlength="160" name="email" placeholder="vous@entreprise.fr" required type="email"></div>
 </div>
-<details class="form-optional-details"><summary>Ajouter des précisions (facultatif)</summary><div class="form-grid optional-grid">
+<fieldset class="choice-fieldset"><legend class="choice-title">Quel est votre besoin principal ? *</legend><div class="choice-grid">
+${needs}
+</div></fieldset>
+<div class="form-field full form-message"><label class="form-label" for="message">Votre message *</label><textarea class="form-control" id="message" maxlength="3000" name="Message" placeholder="Décrivez ce que vous souhaitez créer, améliorer ou automatiser. Quelques phrases suffisent." required></textarea></div>
+<details class="more form-optional-details"><summary><span class="more-t">Ajouter des précisions (facultatif)</span><span class="more-chev">${UI.chevron}</span></summary><div class="more-body"><div class="more-in"><div class="form-grid optional-grid">
 <div class="form-field"><label class="form-label" for="phone">Téléphone <span class="form-optional">facultatif</span></label><input autocomplete="tel" class="form-control" id="phone" inputmode="tel" maxlength="40" name="Téléphone" placeholder="06 00 00 00 00" type="tel"></div>
 <div class="form-field"><label class="form-label" for="company">Entreprise <span class="form-optional">facultatif</span></label><input autocomplete="organization" class="form-control" id="company" maxlength="120" name="Entreprise" placeholder="Nom de l’entreprise" type="text"></div>
 <div class="form-field"><label class="form-label" for="profile">Votre activité</label><select class="form-control" id="profile" name="Activité"><option disabled selected value="">Sélectionnez si utile</option><option value="Indépendant">Indépendant</option><option value="Commerce">Commerce</option><option value="TPE ou PME">TPE ou PME</option><option value="Association">Association</option><option value="Projet en création">Projet en création</option><option value="Autre">Autre</option></select></div>
 <div class="form-field"><label class="form-label" for="timeline">Démarrage souhaité</label><select class="form-control" id="timeline" name="Démarrage souhaité"><option selected value="À définir">À définir</option><option value="Dès que possible">Dès que possible</option><option value="Dans le mois">Dans le mois</option><option value="Dans 1 à 3 mois">Dans 1 à 3 mois</option><option value="Plus tard">Plus tard</option></select></div>
 <div class="form-field full"><label class="form-label" for="budget">Budget envisagé <span class="form-optional">facultatif</span></label><select class="form-control" id="budget" name="Budget envisagé"><option selected value="À définir">À définir</option><option value="Moins de 1 000 €">Moins de 1 000 €</option><option value="1 000 à 2 500 €">1 000 à 2 500 €</option><option value="2 500 à 5 000 €">2 500 à 5 000 €</option><option value="5 000 € et plus">5 000 € et plus</option></select></div>
-</div></details>
-<fieldset class="choice-fieldset"><legend class="choice-title">Quel est votre besoin principal ? *</legend><div class="choice-grid">
-${needs}
-</div></fieldset>
-<div class="form-field full form-message"><label class="form-label" for="message">Votre message *</label><textarea class="form-control" id="message" maxlength="3000" name="Message" placeholder="Décrivez ce que vous souhaitez créer, améliorer ou automatiser. Quelques phrases suffisent." required></textarea></div>
+</div></div></div></details>
+<div class="form-footer"><button class="button button-primary form-submit" type="submit"><span class="label">Envoyer ma demande</span><span class="spinner" aria-hidden="true"></span></button>
+<p class="form-note">Envoi sécurisé via FormSubmit. Un contrôle anti-spam peut s’afficher avant l’envoi.</p></div>
 <p class="privacy-note">Les informations envoyées sont utilisées pour répondre à votre demande. <a href="confidentialite.html">En savoir plus sur vos données et vos droits.</a></p>
-<div class="form-footer"><button class="button button-primary form-submit" type="submit" data-magnetic><span class="label">Envoyer ma demande</span><span class="spinner" aria-hidden="true"></span></button><p class="form-note">Envoi sécurisé via FormSubmit. Un contrôle anti-spam peut s’afficher avant l’envoi.</p></div>
 </form>
 </div>
 </div>
@@ -251,57 +247,64 @@ export function servicePage(s, services) {
     ],
   };
   const others = services.filter((o) => o.slug !== s.slug);
+  const [p1, ...rest] = s.approach.p;
+  const scope = s.scope.items;
+  const SHOWN = 4;
+
   return `${head({ title: s.title, description: s.description, path: `${s.slug}.html`, ld: jsonLd(ld) })}
 <body class="page-sub">
 ${header({ home: false })}
 <main id="contenu">
 <section class="sub-hero" data-theme="dark">
-<div class="hero-bg" aria-hidden="true"><div class="hero-lines"></div><div class="hero-glow"></div><div class="hero-spot"></div></div>
-<div class="container sub-hero-grid">
-<div>
+<div class="hero-bg" aria-hidden="true"><div class="hero-lines"></div><div class="hero-glow"></div></div>
+<div class="container sub-hero-inner">
 <nav class="breadcrumbs" aria-label="Fil d’Ariane" data-hero><a href="index.html">Accueil</a><span aria-hidden="true">/</span><span>${esc(s.crumb)}</span></nav>
 <p class="eyebrow" data-hero>${esc(s.eyebrow)}</p>
 <h1 data-split data-hero>${esc(s.h1)}</h1>
 <p class="lead" data-hero>${esc(s.lead)}</p>
-<div class="hero-actions" data-hero><a class="button button-primary" href="index.html#contact" data-magnetic><span>Parler de mon projet</span>${arrow}</a><a class="button button-ghost" href="services-numeriques-bordeaux-gironde.html" data-magnetic><span>Zone d’intervention</span></a></div>
-</div>
-<aside class="side-card" data-hero><div class="side-icon">${icon(s.key)}</div><span class="side-label">${esc(s.sideLabel)}</span><strong>${esc(s.sideTitle)}</strong><p>${esc(s.sideText)}</p></aside>
+<div class="hero-actions" data-hero><a class="button button-primary" href="index.html#contact" data-magnetic><span>Parler de mon projet</span>${UI.arrow}</a><a class="button button-ghost" href="services-numeriques-bordeaux-gironde.html" data-magnetic><span>Zone d’intervention</span></a></div>
+<div class="hero-meta" data-hero><span class="hero-meta-ic">${icon(s.key)}</span><div><b>${esc(s.sideTitle)}</b><span>${esc(s.sideText)}</span></div></div>
 </div>
 </section>
 
-<section class="block" data-theme="light"><div class="container two-col">
-<div><p class="eyebrow" data-reveal>${esc(s.approach.eyebrow)}</p><h2 data-split>${esc(s.approach.h2)}</h2></div>
-<div class="copy">${s.approach.p.map((p) => `<p data-reveal>${esc(p)}</p>`).join('')}</div>
+<nav class="subnav" aria-label="Sections de la page" data-theme="light"><div class="container subnav-in">
+<a href="#approche" data-nav="approche">Approche</a><a href="#perimetre" data-nav="perimetre">Périmètre</a><a href="#cas" data-nav="cas">Cas d’usage</a><a href="#faq" data-nav="faq">Questions</a><a href="#autres" data-nav="autres">Autres services</a>
+</div></nav>
+
+<section class="sec" id="approche" data-theme="light"><div class="container narrow">
+${secHead(esc(s.approach.eyebrow), esc(s.approach.h2))}
+<p class="sec-text" data-reveal>${esc(p1)}</p>
+${rest.length ? `<div data-reveal>${more('En savoir plus', rest.map((p) => `<p>${esc(p)}</p>`).join(''), { icon: UI.info })}</div>` : ''}
 </div></section>
 
-<section class="block block-soft" data-theme="light"><div class="container">
-<p class="eyebrow" data-reveal>${esc(s.scope.eyebrow)}</p><h2 data-split>${esc(s.scope.h2)}</h2>
-<ul class="check-grid">${s.scope.items.map((i) => `<li data-reveal>${esc(i)}</li>`).join('')}</ul>
+<section class="sec sec-soft" id="perimetre" data-theme="light"><div class="container narrow">
+${secHead(esc(s.scope.eyebrow), esc(s.scope.h2))}
+<ul class="checks" id="scope-list" data-reveal>${scope.map((i, n) => `<li${n >= SHOWN ? ' class="extra"' : ''}>${UI.check}<span>${esc(i)}</span></li>`).join('')}</ul>
+<button class="more-btn" type="button" data-more aria-controls="scope-list" aria-expanded="false" data-more-label="Voir les ${scope.length - SHOWN} autres" data-less-label="Réduire"><span>Voir les ${scope.length - SHOWN} autres</span>${UI.chevron}</button>
 </div></section>
 
-<section class="block" data-theme="light"><div class="container">
-<p class="eyebrow" data-reveal>${esc(s.cases.eyebrow)}</p><h2 data-split>${esc(s.cases.h2)}</h2>
-<div class="case-grid">${s.cases.cards.map((c, i) => `<article class="case" data-spot data-reveal><span class="case-n">0${i + 1}</span><h3>${esc(c.t)}</h3><p>${esc(c.p)}</p></article>`).join('')}</div>
+<section class="sec" id="cas" data-theme="light"><div class="container narrow">
+${secHead(esc(s.cases.eyebrow), esc(s.cases.h2))}
+<div class="cases">${s.cases.cards.map((c, i) => `<article class="case" data-reveal><span class="case-n">0${i + 1}</span><div><h3>${esc(c.t)}</h3><p>${esc(c.p)}</p></div></article>`).join('')}</div>
 </div></section>
 
-<section class="local-band" data-theme="dark"><div class="container local-band-grid">
-<div><p class="eyebrow" data-reveal>Local</p><h2 data-split>Bordeaux Métropole et toute la Gironde.</h2></div>
-<div data-reveal><p>CVTL Lab est basé au Taillan-Médoc. Les projets peuvent être menés avec des entreprises de Bordeaux, Mérignac, Pessac, Talence, Bègles, Le Bouscat, Saint-Médard-en-Jalles et des autres communes de la métropole, ainsi que dans le reste de la Gironde.</p><a class="text-link" href="services-numeriques-bordeaux-gironde.html">Voir toutes les zones couvertes →</a></div>
+<section class="sec sec-soft sec-tight" id="local" data-theme="light"><div class="container narrow" data-reveal>
+${more('Bordeaux Métropole et toute la Gironde.', `<p>CVTL Lab est basé au Taillan-Médoc. Les projets peuvent être menés avec des entreprises de Bordeaux, Mérignac, Pessac, Talence, Bègles, Le Bouscat, Saint-Médard-en-Jalles et des autres communes de la métropole, ainsi que dans le reste de la Gironde.</p><a class="text-link" href="services-numeriques-bordeaux-gironde.html">Voir toutes les zones couvertes →</a>`, { cls: 'more-lg', icon: UI.pin })}
 </div></section>
 
-<section class="block" data-theme="light"><div class="container faq-shell">
-<p class="eyebrow" data-reveal>${esc(s.faq.eyebrow)}</p><h2 data-split>${esc(s.faq.h2)}</h2>
-<div class="faq-list">${s.faq.items.map((f) => `<details class="faq" data-reveal><summary><span>${esc(f.q)}</span><i aria-hidden="true"></i></summary><div class="faq-body"><p>${esc(f.a)}</p></div></details>`).join('')}</div>
+<section class="sec" id="faq" data-theme="light"><div class="container narrow">
+${secHead(esc(s.faq.eyebrow), esc(s.faq.h2))}
+<div class="faq-list" data-reveal>${s.faq.items.map((f) => `<details class="faq"><summary><span>${esc(f.q)}</span><i aria-hidden="true"></i></summary><div class="faq-body"><p>${esc(f.a)}</p></div></details>`).join('')}</div>
 </div></section>
 
-<section class="block block-soft" data-theme="light"><div class="container">
-<p class="eyebrow" data-reveal>Poursuivre</p><h2 data-split>Les autres services.</h2>
-<div class="next-grid">${others.map((o) => `<a class="next-card" data-spot data-reveal href="${o.slug}.html"><span class="next-ic">${icon(o.key)}</span><strong>${esc(SHORT[o.key] || o.crumb)}</strong>${arrow}</a>`).join('')}</div>
+<section class="sec sec-soft" id="autres" data-theme="light"><div class="container narrow">
+${secHead('Poursuivre', 'Les autres services.')}
+<div class="chips-row" data-reveal>${others.map((o) => `<a class="chip-link" href="${o.slug}.html"><span class="chip-ic">${icon(o.key)}</span>${esc(SHORT[o.key] || o.crumb)}${UI.arrow}</a>`).join('')}</div>
 </div></section>
 
 <section class="cta" data-theme="dark"><div class="cta-glow" aria-hidden="true"></div><div class="container cta-inner">
-<div><p class="eyebrow" data-reveal>Projet</p><h2 data-split>Un besoin précis suffit pour commencer.</h2><p data-reveal>Expliquez la situation actuelle, le problème à résoudre et ce que vous aimeriez obtenir. La solution technique peut être définie ensuite.</p></div>
-<a class="button button-primary button-lg" href="index.html#contact" data-magnetic><span>Parler de mon projet</span>${arrow}</a>
+<div><p class="eyebrow" data-reveal>Projet</p><h2 data-reveal>Un besoin précis suffit pour commencer.</h2><p data-reveal>Expliquez la situation actuelle, le problème à résoudre et ce que vous aimeriez obtenir. La solution technique peut être définie ensuite.</p></div>
+<a class="button button-primary button-lg" href="index.html#contact" data-magnetic><span>Parler de mon projet</span>${UI.arrow}</a>
 </div></section>
 </main>
 ${footer(services)}
@@ -331,39 +334,40 @@ export function zonePage(services) {
 ${header({ home: false })}
 <main id="contenu">
 <section class="sub-hero" data-theme="dark">
-<div class="hero-bg" aria-hidden="true"><div class="hero-lines"></div><div class="hero-glow"></div><div class="hero-spot"></div></div>
-<div class="container sub-hero-grid">
-<div>
+<div class="hero-bg" aria-hidden="true"><div class="hero-lines"></div><div class="hero-glow"></div></div>
+<div class="container sub-hero-inner">
 <nav class="breadcrumbs" aria-label="Fil d’Ariane" data-hero><a href="index.html">Accueil</a><span aria-hidden="true">/</span><span>Bordeaux &amp; Gironde</span></nav>
 <p class="eyebrow" data-hero>Zone d’intervention</p>
 <h1 data-split data-hero>Services numériques à Bordeaux Métropole et en Gironde.</h1>
 <p class="lead" data-hero>CVTL Lab est basé au Taillan-Médoc et accompagne les indépendants, commerces, associations et TPE/PME sur leurs projets de sites web, automatisations, outils métier et intégrations d’IA.</p>
-<div class="hero-actions" data-hero><a class="button button-primary" href="index.html#contact" data-magnetic><span>Parler de mon projet</span>${arrow}</a><a class="button button-ghost" href="index.html#services" data-magnetic><span>Voir les services</span></a></div>
-</div>
-<aside class="side-card" data-hero><div class="side-pin"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M24 43s13-11.5 13-22a13 13 0 1 0-26 0c0 10.5 13 22 13 22z"/><circle pathLength="1" cx="24" cy="21" r="4.5"/></svg></div><span class="side-label">Base locale</span><strong>Le Taillan-Médoc</strong><p>Échanges à distance dans toute la Gironde et rendez-vous en personne autour de Bordeaux lorsque le projet le justifie.</p></aside>
+<div class="hero-actions" data-hero><a class="button button-primary" href="index.html#contact" data-magnetic><span>Parler de mon projet</span>${UI.arrow}</a><a class="button button-ghost" href="index.html#services" data-magnetic><span>Voir les services</span></a></div>
+<div class="hero-meta" data-hero><span class="hero-meta-ic">${UI.pin}</span><div><b>Le Taillan-Médoc</b><span>Échanges à distance dans toute la Gironde et rendez-vous en personne autour de Bordeaux lorsque le projet le justifie.</span></div></div>
 </div>
 </section>
 
-<section class="block" data-theme="light"><div class="container two-col">
-<div><p class="eyebrow" data-reveal>Bordeaux Métropole</p><h2 data-split>Les 28 communes de la métropole.</h2></div>
-<div class="copy"><p data-reveal>La proximité permet d’organiser un échange en personne lorsqu’il apporte une vraie valeur : cadrage d’un besoin métier, compréhension d’un processus ou lancement d’un projet. Le reste du travail peut être réalisé à distance.</p><p data-reveal>CVTL Lab intervient sur l’ensemble de Bordeaux Métropole :</p></div>
-</div>
-<div class="container"><ul class="commune-grid">${COMMUNES.map((c) => `<li data-reveal>${esc(c)}</li>`).join('')}</ul></div>
-</section>
+<nav class="subnav" aria-label="Sections de la page" data-theme="light"><div class="container subnav-in">
+<a href="#metropole" data-nav="metropole">Bordeaux Métropole</a><a href="#gironde" data-nav="gironde">Gironde</a><a href="#services" data-nav="services">Services</a>
+</div></nav>
 
-<section class="block block-soft" data-theme="light"><div class="container">
-<p class="eyebrow" data-reveal>Gironde</p><h2 data-split>Au-delà de la métropole : toute la Gironde.</h2>
-<div class="case-grid">${regions.map(([t, p], i) => `<article class="case" data-spot data-reveal><span class="case-n">0${i + 1}</span><h3>${esc(t)}</h3><p>${esc(p)}</p></article>`).join('')}</div>
+<section class="sec" id="metropole" data-theme="light"><div class="container narrow">
+${secHead('Bordeaux Métropole', 'Les 28 communes de la métropole.')}
+<p class="sec-text" data-reveal>La proximité permet d’organiser un échange en personne lorsqu’il apporte une vraie valeur : cadrage d’un besoin métier, compréhension d’un processus ou lancement d’un projet. Le reste du travail peut être réalisé à distance.</p>
+<div data-reveal>${more('CVTL Lab intervient sur l’ensemble de Bordeaux Métropole', `<ul class="chips">${COMMUNES.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>`, { cls: 'more-lg', icon: UI.map })}</div>
 </div></section>
 
-<section class="block" data-theme="light"><div class="container">
-<p class="eyebrow" data-reveal>Services locaux</p><h2 data-split>Un même interlocuteur pour le web et les outils numériques.</h2>
-<div class="next-grid next-grid-lg">${services.map((o) => `<a class="next-card" data-spot data-reveal href="${o.slug}.html"><span class="next-ic">${icon(o.key)}</span><strong>${esc(o.sideTitle)}</strong><em>Bordeaux &amp; Gironde</em>${arrow}</a>`).join('')}</div>
+<section class="sec sec-soft" id="gironde" data-theme="light"><div class="container narrow">
+${secHead('Gironde', 'Au-delà de la métropole : toute la Gironde.')}
+<div class="faq-list" data-reveal>${regions.map(([t, p]) => `<details class="faq"><summary><span>${esc(t)}</span><i aria-hidden="true"></i></summary><div class="faq-body"><p>${esc(p)}</p></div></details>`).join('')}</div>
+</div></section>
+
+<section class="sec" id="services" data-theme="light"><div class="container narrow">
+${secHead('Services locaux', 'Un même interlocuteur pour le web et les outils numériques.')}
+<div class="chips-row" data-reveal>${services.map((o) => `<a class="chip-link" href="${o.slug}.html"><span class="chip-ic">${icon(o.key)}</span>${esc(o.sideTitle)}<em>Bordeaux &amp; Gironde</em>${UI.arrow}</a>`).join('')}</div>
 </div></section>
 
 <section class="cta" data-theme="dark"><div class="cta-glow" aria-hidden="true"></div><div class="container cta-inner">
-<div><p class="eyebrow" data-reveal>Projet en Gironde</p><h2 data-split>Expliquez simplement le besoin.</h2><p data-reveal>Le premier échange sert à comprendre votre activité, le problème à résoudre et le niveau de solution réellement nécessaire.</p></div>
-<a class="button button-primary button-lg" href="index.html#contact" data-magnetic><span>Parler de mon projet</span>${arrow}</a>
+<div><p class="eyebrow" data-reveal>Projet en Gironde</p><h2 data-reveal>Expliquez simplement le besoin.</h2><p data-reveal>Le premier échange sert à comprendre votre activité, le problème à résoudre et le niveau de solution réellement nécessaire.</p></div>
+<a class="button button-primary button-lg" href="index.html#contact" data-magnetic><span>Parler de mon projet</span>${UI.arrow}</a>
 </div></section>
 </main>
 ${footer(services)}
@@ -372,12 +376,25 @@ ${tail()}`;
 
 /* ------------------------------------------------------------------ LÉGAL / MERCI / 404 */
 export function legalPage(slug, data, services) {
+  // Chaque <h2> devient un volet repliable ; le texte d'introduction reste visible.
+  const parts = data.body.split(/(?=<h2>)/);
+  const intro = parts[0].trim().startsWith('<h2>') ? '' : parts.shift();
+  const secs = parts
+    .map((part, i) => {
+      const m = part.match(/^<h2>(.*?)<\/h2>([\s\S]*)$/);
+      return m ? `<details class="faq legal-sec"${i === 0 ? ' open' : ''}><summary><span>${m[1]}</span><i aria-hidden="true"></i></summary><div class="faq-body"><div class="legal-text">${m[2]}</div></div></details>` : '';
+    })
+    .join('');
   return `${head({ title: data.title, description: data.description, path: `${slug}.html`, robots: 'noindex, follow', og: false })}
 <body class="page-sub page-legal">
 ${header({ home: false })}
-<main id="contenu" class="legal-main">
-<section class="legal-hero" data-theme="dark"><div class="hero-bg" aria-hidden="true"><div class="hero-lines"></div><div class="hero-glow"></div></div><div class="container legal-shell"><a class="back-link" href="index.html" data-hero>← Retour au site</a><p class="eyebrow" data-hero>${data.eyebrow}</p><h1 data-hero>${data.h1}</h1></div></section>
-<section class="legal-body" data-theme="light"><div class="container legal-shell legal-content">${data.body}</div></section>
+<main id="contenu">
+<section class="sub-hero legal-hero" data-theme="dark"><div class="hero-bg" aria-hidden="true"><div class="hero-lines"></div><div class="hero-glow"></div></div><div class="container sub-hero-inner"><a class="back-link" href="index.html" data-hero>← Retour au site</a><p class="eyebrow" data-hero>${data.eyebrow}</p><h1 data-hero>${data.h1}</h1></div></section>
+<section class="sec" data-theme="light"><div class="container narrow">
+${intro ? `<div class="legal-intro">${intro}</div>` : ''}
+<div class="legal-bar"><button class="more-btn" type="button" data-expand-all="legal-list" data-open-label="Tout déplier" data-close-label="Tout replier" aria-pressed="false"><span>Tout déplier</span>${UI.chevron}</button></div>
+<div class="faq-list" id="legal-list">${secs}</div>
+</div></section>
 </main>
 ${footer(services)}
 ${tail()}`;
@@ -388,11 +405,11 @@ export function simplePage({ slug, title, description, eyebrow, h1, lead, cta = 
 <body class="page-sub page-simple">
 ${header({ home: false })}
 <main id="contenu" class="simple-main">
-<section class="simple" data-theme="dark"><div class="hero-bg" aria-hidden="true"><div class="hero-lines"></div><div class="hero-glow"></div><div class="hero-spot"></div></div>
+<section class="simple" data-theme="dark"><div class="hero-bg" aria-hidden="true"><div class="hero-lines"></div><div class="hero-glow"></div></div>
 <div class="container simple-inner">
 ${big ? `<div class="simple-big" aria-hidden="true">${big}</div>` : `<div class="simple-logo" aria-hidden="true">${logo('simple-logo-svg')}</div>`}
 <p class="eyebrow" data-hero>${eyebrow}</p><h1 data-hero>${h1}</h1><p class="lead" data-hero>${lead}</p>
-<p data-hero><a class="button button-primary" href="index.html" data-magnetic><span>${cta}</span>${arrow}</a></p>
+<p data-hero><a class="button button-primary" href="index.html" data-magnetic><span>${cta}</span>${UI.arrow}</a></p>
 </div></section>
 </main>
 ${footer(services)}

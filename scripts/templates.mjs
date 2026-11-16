@@ -32,6 +32,19 @@ export const ICONS = {
 export const icon = (key) =>
   `<svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICONS[key]}</svg>`;
 
+const sv = (d, extra = '') => `<svg class="ui ${extra}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${d}</svg>`;
+export const UI = {
+  check: sv('<path d="m5 12.5 4.5 4.5L19 7.5"/>'),
+  chevron: sv('<path d="m6 9 6 6 6-6"/>', 'chev'),
+  arrow: sv('<path d="M5 12h14M13 6l6 6-6 6"/>', 'arr'),
+  pin: sv('<path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/>'),
+  map: sv('<path d="m9 4 6 2 5-2v14l-5 2-6-2-5 2V6z"/><path d="M9 4v14M15 6v14"/>'),
+  globe: sv('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>'),
+  user: sv('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.400 3.600-7 8-7s8 2.600 8 7"/>'),
+  people: sv('<circle cx="9" cy="8" r="3.500"/><path d="M2.500 20c0-3.600 2.900-6 6.500-6s6.500 2.400 6.500 6"/><path d="M16 4.600a3.500 3.500 0 0 1 0 6.800M18 14.300c2.200.8 3.500 2.700 3.500 5.700"/>'),
+  info: sv('<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'),
+};
+
 export const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj)}</script>`;
 
 const CSP =
@@ -115,22 +128,22 @@ ${NAV.map(([id, label], i) => `<a href="${base}#${id}"><small>0${i + 1}</small>$
 export const SHORT = { web: 'Sites web', tool: 'Outils sur mesure', auto: 'Automatisation', ai: 'Intelligence artificielle', domain: 'Domaine & e-mail', audit: 'Amélioration & sécurité' };
 
 export function footer(services) {
-  const sv = services.map((s) => `<li><a href="${s.slug}.html">${esc(SHORT[s.key] || s.crumb)}</a></li>`).join('');
+  const sv2 = services.map((s) => `<li><a href="${s.slug}.html">${esc(SHORT[s.key] || s.crumb)}</a></li>`).join('');
   return `<footer class="footer" data-theme="dark">
 <div class="container">
-<div class="footer-top">
-<div class="footer-pitch">
-<p class="eyebrow">Un projet en tête ?</p>
-<a class="footer-mail" href="mailto:${SITE.email}">${SITE.email}</a>
+<div class="foot-grid">
+<div class="foot-brand">
+<a class="brand" href="index.html" aria-label="CVTL Lab, accueil">${logo('brand-logo foot-logo')}<span class="brand-name">CVTL Lab</span></a>
+<p>Bordeaux · Gironde</p>
+<a class="foot-mail" href="mailto:${SITE.email}">${SITE.email}</a>
 </div>
-<nav class="footer-cols" aria-label="Pied de page">
-<div><h2>Services</h2><ul>${sv}</ul></div>
+<nav class="foot-cols" aria-label="Pied de page">
+<div><h2>Services</h2><ul>${sv2}</ul></div>
 <div><h2>Studio</h2><ul><li><a href="services-numeriques-bordeaux-gironde.html">Bordeaux &amp; Gironde</a></li><li><a href="index.html#tarifs">Sans abonnement</a></li><li><a href="index.html#methode">Méthode</a></li><li><a href="index.html#apropos">À propos</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
 <div><h2>Légal</h2><ul><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="confidentialite.html">Confidentialité</a></li></ul></div>
 </nav>
 </div>
-<div class="footer-word" aria-hidden="true"><span>CVTL Lab</span><i>.</i></div>
-<div class="footer-bottom"><div><strong>CVTL Lab</strong> · Bordeaux, Gironde</div><div>© <span id="year">2026</span> CVTL Lab</div></div>
+<div class="foot-bottom"><span>© <span id="year">2026</span> CVTL Lab</span><span>Studio numérique indépendant</span></div>
 </div>
 </footer>`;
 }

@@ -1,7 +1,7 @@
 /* main.js — point d'entrée CVTL Lab */
 import { runIntro } from './intro.js';
 import { splitText, reveals, heroIndexes, counters, pointerFx, heroPointer, scrollFx } from './fx.js';
-import { menu, faq, form, prefetch, year } from './ui.js';
+import { menu, faq, tabs, toggles, form, prefetch, year } from './ui.js';
 
 const d = document.documentElement;
 const go = () => d.classList.add('hero-go');
@@ -9,7 +9,7 @@ const go = () => d.classList.add('hero-go');
 try {
   splitText();
   heroIndexes();
-  menu(); faq(); form(); prefetch(); year();
+  menu(); faq(); tabs(); toggles(); form(); prefetch(); year();
   pointerFx(); heroPointer(); scrollFx();
   counters();
   reveals();

@@ -60,6 +60,14 @@ Connexion (une seule fois) : Cloudflare → Workers & Pages → `cvtllab` → **
 Le domaine `cvtllab.fr` reste rattaché au Worker : aucun changement DNS.
 La CI GitHub (`.github/workflows/ci.yml`) exécute `build` + `check` sur chaque push et pull request.
 
+### Déploiement direct (sans Workers Builds)
+
+Tant que le dépôt n'est pas connecté dans Cloudflare, on peut publier à la main : `node scripts/deploy-worker.mjs dist worker.js` génère un Worker autonome qui embarque tout `dist/`, à envoyer sur le Worker `cvtllab` (API Cloudflare, `PUT /accounts/<id>/workers/scripts/cvtllab`).
+
+### Revenir à l'ancienne version
+
+La version « immersive » (v2) est conservée sur la branche `backup/v2-immersive`. Pour y revenir : reconstruire cette branche (`npm run build`) et la redéployer, ou remettre `main` sur ce commit. Cloudflare garde aussi l'historique des versions du Worker (Rollback dans le tableau de bord).
+
 ## Sécurité
 
 CSP stricte par `<meta>` : `script-src 'self'`, `style-src 'self'` (donc **aucun script ni `style=""` inline** — `npm run check` le vérifie), envoi du formulaire limité à FormSubmit.

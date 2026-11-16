@@ -139,10 +139,9 @@ export function scrollFx() {
   const root = document.documentElement;
   const header = document.getElementById('siteHeader');
   const themed = $$('main [data-theme], footer[data-theme]');
-  const navLinks = $$('.nav-links a[data-nav]');
-  const secs = navLinks.map((a) => document.getElementById(a.dataset.nav)).filter(Boolean);
-  const stepsWrap = document.getElementById('steps');
-  const steps = $$('.step');
+  const isHome = document.body.classList.contains('page-home');
+  const navLinks = $$(isHome ? '.nav-links a[data-nav]' : '.subnav a[data-nav]');
+  const secs = navLinks.map((a) => document.getElementById(a.dataset.nav));
   const par = $$('[data-parallax]');
   let ticking = false;
 
@@ -166,17 +165,10 @@ export function scrollFx() {
 
     // Lien actif (section qui occupe le centre de l'écran)
     secs.forEach((s, i) => {
+      if (!s) return;
       const r = s.getBoundingClientRect();
-      navLinks[i].classList.toggle('is-active', r.top < vh * 0.45 && r.bottom > vh * 0.45);
+      navLinks[i].classList.toggle('is-active', r.top < vh * 0.4 && r.bottom > vh * 0.4);
     });
-
-    // Méthode : ligne qui se dessine + étapes actives
-    if (stepsWrap) {
-      const r = stepsWrap.getBoundingClientRect();
-      const p = clamp((vh * 0.62 - r.top) / (r.height - 40));
-      stepsWrap.style.setProperty('--sp', p.toFixed(4));
-      steps.forEach((s) => s.classList.toggle('is-active', s.getBoundingClientRect().top < vh * 0.62));
-    }
 
     // Parallaxe
     if (!reduce) par.forEach((el) => {

@@ -26,25 +26,84 @@ export function menu() {
   matchMedia('(min-width: 901px)').addEventListener?.('change', (m) => m.matches && set(false));
 }
 
-/* FAQ : ouverture/fermeture avec animation de hauteur (WAAPI) */
+/* Volets repliables (FAQ, « en savoir plus », légal) : animation de hauteur (WAAPI) */
 export function faq() {
-  $$('details.faq').forEach((d) => {
-    const body = $('.faq-body', d);
+  $$('details.faq, details.more').forEach((d) => {
+    const body = d.querySelector(':scope > .faq-body, :scope > .more-body');
+    const sum = d.querySelector(':scope > summary');
+    if (!body || !sum) return;
     let anim;
-    $('summary', d).addEventListener('click', (e) => {
+    sum.addEventListener('click', (e) => {
       if (reduce) return;
       e.preventDefault();
       anim?.cancel();
       if (!d.open) {
         d.open = true;
         const h = body.scrollHeight;
-        anim = body.animate({ height: ['0px', h + 'px'], opacity: [0, 1] }, { duration: 650, easing: OUT });
+        anim = body.animate({ height: ['0px', h + 'px'], opacity: [0, 1] }, { duration: 550, easing: OUT });
         anim.onfinish = () => (anim = null);
       } else {
         const h = body.offsetHeight;
-        anim = body.animate({ height: [h + 'px', '0px'], opacity: [1, 0] }, { duration: 450, easing: OUT });
+        anim = body.animate({ height: [h + 'px', '0px'], opacity: [1, 0] }, { duration: 400, easing: OUT });
         anim.onfinish = () => { d.open = false; anim = null; };
       }
+    });
+  });
+}
+
+/* Onglets accessibles (services, étapes) : flèches, Home/End, un seul panneau visible */
+export function tabs() {
+  $$('[data-tabs]').forEach((root) => {
+    const list = $$('[role="tab"]', root);
+    const panels = list.map((t) => document.getElementById(t.getAttribute('aria-controls')));
+    const stepper = root.hasAttribute('data-stepper');
+    const select = (i, { focus = false, animate = true } = {}) => {
+      list.forEach((t, j) => {
+        t.setAttribute('aria-selected', String(i === j));
+        t.tabIndex = i === j ? 0 : -1;
+        if (stepper) t.classList.toggle('is-done', j < i);
+      });
+      panels.forEach((p, j) => {
+        if (!p) return;
+        p.hidden = j !== i;
+        if (j === i && animate && !reduce) { p.classList.remove('enter'); void p.offsetWidth; p.classList.add('enter'); }
+      });
+      if (stepper) root.style.setProperty('--tp', (i / Math.max(list.length - 1, 1)).toFixed(3));
+      if (focus) list[i].focus();
+    };
+    list.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const n = list.length;
+        const map = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+        if (e.key in map) { e.preventDefault(); select((i + map[e.key] + n) % n, { focus: true }); }
+        else if (e.key === 'Home') { e.preventDefault(); select(0, { focus: true }); }
+        else if (e.key === 'End') { e.preventDefault(); select(n - 1, { focus: true }); }
+      });
+    });
+    select(0, { animate: false });
+  });
+}
+
+/* « Voir les N autres » et « Tout déplier » */
+export function toggles() {
+  $$('[data-more]').forEach((btn) => {
+    const list = document.getElementById(btn.getAttribute('aria-controls'));
+    const label = $('span', btn);
+    btn.addEventListener('click', () => {
+      const open = list.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+      label.textContent = open ? btn.dataset.lessLabel : btn.dataset.moreLabel;
+    });
+  });
+  $$('[data-expand-all]').forEach((btn) => {
+    const box = document.getElementById(btn.dataset.expandAll);
+    const label = $('span', btn);
+    btn.addEventListener('click', () => {
+      const on = btn.getAttribute('aria-pressed') !== 'true';
+      $$('details', box).forEach((d) => (d.open = on));
+      btn.setAttribute('aria-pressed', String(on));
+      label.textContent = on ? btn.dataset.closeLabel : btn.dataset.openLabel;
     });
   });
 }
